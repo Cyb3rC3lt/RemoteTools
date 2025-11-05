@@ -1,0 +1,1 @@
+Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" | Where-Object { $_.Id -eq 5007 -and $_.Message -match "Exclusions" } | ForEach-Object { if ($_.Message -match "SOFTWARE\\Microsoft\\Windows Defender\\Exclusions\\Paths\\[^\s]+") { $matches[0] } }
